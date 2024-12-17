@@ -11,6 +11,10 @@ const ProcedimentoEnum = require('../enums/Procedimento');
 const RegistroEnum = require('../enums/Registro');
 
 const Equipamento = new Schema({
+    nome: {
+        type: String,
+        required: true,
+    },
     tag: {
         type: String,
         required: true,

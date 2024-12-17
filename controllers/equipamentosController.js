@@ -4,7 +4,7 @@ const Equipamento = mongoose.model('equipamentos');
 
 const registrar = async (req, res) => {
     const {
-        tag, ultima_calibracao, proxima_calibracao,
+        nome, tag, ultima_calibracao, proxima_calibracao,
         norma, ensaio, metodo, teste, fabricante,
         modelo, serie, capacidade, ponto_calibracao,
         tolerancia, periocidade, procedimento, registro, observacoes
@@ -16,6 +16,7 @@ const registrar = async (req, res) => {
     }
 
     const equipamento = new Equipamento({
+        nome,
         tag,
         ultima_calibracao,
         proxima_calibracao,
