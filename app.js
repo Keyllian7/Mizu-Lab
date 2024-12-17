@@ -5,6 +5,7 @@ const db = require('./config/db')
 const verificarToken = require('./middlewares/verificarToken')
 const auth = require('./routes/auth')
 const equipamentos = require('./routes/equipamentos')
+const cors = require('cors')
 
 // Models
 const Usuario = require('./models/Usuario')
@@ -18,6 +19,7 @@ const Usuario = require('./models/Usuario')
     })
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 // Rota inicial - pública

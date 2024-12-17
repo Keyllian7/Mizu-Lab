@@ -84,7 +84,8 @@ const Equipamento = new Schema({
     },
     observacoes: {
         type: String,
-        required: true,
+        required: false,
+        default: 'Sem observações',
     }
 
 })
