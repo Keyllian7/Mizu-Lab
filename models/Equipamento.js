@@ -8,6 +8,7 @@ const TesteEnum = require('../enums/Teste');
 const ToleranciaEnum = require('../enums/Tolerancia');
 const PeriocidadeEnum = require('../enums/Periocidade');
 const ProcedimentoEnum = require('../enums/Procedimento');
+const RegistroEnum = require('../enums/Registro');
 
 const Equipamento = new Schema({
     tag: {
@@ -73,7 +74,7 @@ const Equipamento = new Schema({
     },
     procedimento: {
         type: String,
-        enum: Obeject.values(ProcedimentoEnum),
+        enum: Object.values(ProcedimentoEnum),
         required: true,
     },
     registro: {

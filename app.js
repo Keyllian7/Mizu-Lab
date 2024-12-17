@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const db = require('./config/db')
 const verificarToken = require('./middlewares/verificarToken')
 const auth = require('./routes/auth')
+const equipamentos = require('./routes/equipamentos')
 
 // Models
 const Usuario = require('./models/Usuario')
@@ -38,6 +39,7 @@ app.get('/consulta/:id', verificarToken, async(req, res) => {
 })
 
 app.use('/auth', auth)
+app.use('/equipamentos', equipamentos)
 
 const porta = 8081
 app.listen(porta, () => {
