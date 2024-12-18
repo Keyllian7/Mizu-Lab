@@ -5,26 +5,21 @@ const Equipamento = mongoose.model('equipamentos');
 const registrar = async (req, res) => {
 
     const {
-        nome, tag, ultima_calibracao, proxima_calibracao,
+        nome, tag,
         norma, ensaio, metodo, teste, fabricante,
         modelo, serie, capacidade, ponto_calibracao,
         tolerancia, periocidade, procedimento, registro, observacoes
     } = req.body;
 
-    if (!tag || !ultima_calibracao || !proxima_calibracao || !norma || !ensaio ||
+    if (!tag || !norma || !ensaio ||
         !metodo || !teste || !fabricante || !modelo || !serie || !capacidade ||
         !ponto_calibracao || !tolerancia || !periocidade || !procedimento || !registro || !observacoes) {
         return res.status(422).json({ mensagem: 'Preencha todos os campos!' });
     }
 
     const equipamento = new Equipamento({
+        tag,
         nome,
-        tag,
-        ultima_calibracao,
-        proxima_calibracao,
-        tag,
-        ultima_calibracao,
-        proxima_calibracao,
         norma,
         ensaio,
         metodo,
@@ -81,7 +76,7 @@ const deletar = async (req, res) => {
 
 const atualizar = async (req, res) => {
 
-    if (!req.body.tag || !req.body.ultima_calibracao || !req.body.proxima_calibracao || !req.body.norma || !req.body.ensaio ||
+    if (!req.body.tag || !req.body.norma || !req.body.ensaio ||
         !req.body.metodo || !req.body.teste || !req.body.fabricante || !req.body.modelo || !req.body.serie || !req.body.capacidade ||
         !req.body.ponto_calibracao || !req.body.tolerancia || !req.body.periocidade || !req.body.procedimento || !req.body.registro || !req.body.observacoes) {
         return res.status(422).json({ mensagem: 'Preencha todos os campos!' });
@@ -90,8 +85,6 @@ const atualizar = async (req, res) => {
     Equipamento.findOne({ _id: req.params.id }).then((equipamento) => {
         equipamento.nome = req.body.nome;
         equipamento.tag = req.body.tag;
-        equipamento.ultima_calibracao = req.body.ultima_calibracao;
-        equipamento.proxima_calibracao = req.body.proxima_calibracao;
         equipamento.norma = req.body.norma;
         equipamento.ensaio = req.body.ensaio;
         equipamento.metodo = req.body.metodo;
@@ -117,4 +110,14 @@ const atualizar = async (req, res) => {
     })
 }
 
-module.exports = { registrar, listar, deletar, atualizar };
+const detalhes = async(req, res) => {
+    Equipamento.findById({_id: req.params.id}).then((equipamento) => {
+        res.status(200).json({ equipamento });
+    }).catch((err) => {
+        res.status(500).json({
+            mensagem: "Não foi possível encontrar o equipamento, tente novamente mais tarde!"
+        })
+    })
+}
+
+module.exports = { registrar, listar, deletar, atualizar, detalhes };

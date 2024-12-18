@@ -15,4 +15,7 @@ router.get('/deletar/:id', verificarToken, equipamentoController.deletar)
 // Atualizar equipamento por id
 router.put('/atualizar/:id', equipamentoController.atualizar)
 
+// Detalhar equipamento por id
+router.get('/detalhes/:id', equipamentoController.detalhes)
+
 module.exports = router;
