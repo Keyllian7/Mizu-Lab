@@ -5,6 +5,7 @@ const db = require('./config/db')
 const verificarToken = require('./middlewares/verificarToken')
 const auth = require('./routes/auth')
 const equipamentos = require('./routes/equipamentos')
+const usuarios = require('./routes/usuarios')
 const cors = require('cors')
 
 // Models
@@ -24,11 +25,12 @@ app.use(express.json());
 
 // Rota inicial - pública
 app.get('/', (req, res) => {
-    res.status(200).json({ mensagem: 'Testando Servidor' });
+    res.status(200).json({ mensagem: 'Conectado ao servidor!' });
 })
 
 app.use('/auth', auth)
 app.use('/equipamentos', equipamentos)
+app.use('/usuarios', usuarios)
 
 const porta = 8081
 app.listen(porta, () => {
