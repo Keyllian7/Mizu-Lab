@@ -27,19 +27,6 @@ app.get('/', (req, res) => {
     res.status(200).json({ mensagem: 'Testando Servidor' });
 })
 
-// Rota consulta - privada
-app.get('/consulta/:id', verificarToken, async(req, res) => {
-    const id = req.params.id;
-    const usuario = await Usuario.findById(id, '-senha');
-
-    if(!usuario) {
-        return res.status(404).json({ mensagem: 'Usuário não encontrado!' })
-    }
-
-    res.status(200).json({usuario});
-
-})
-
 app.use('/auth', auth)
 app.use('/equipamentos', equipamentos)
 
