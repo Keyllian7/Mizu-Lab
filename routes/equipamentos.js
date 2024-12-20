@@ -18,4 +18,7 @@ router.put('/atualizar/:id', equipamentoController.atualizar)
 // Detalhar equipamento por id
 router.get('/detalhes/:id', equipamentoController.detalhes)
 
+// Gerenciar calibração
+router.put('/calibrar/:id', equipamentoController.calibrar)
+
 module.exports = router;

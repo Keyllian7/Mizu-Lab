@@ -11,6 +11,11 @@ const ProcedimentoEnum = require('../enums/Procedimento');
 const RegistroEnum = require('../enums/Registro');
 
 const Equipamento = new Schema({
+    responsavel: {
+        type: Schema.Types.ObjectId,
+        ref: 'Usuario',
+        required: true,
+    },
     nome: {
         type: String,
         required: true,
@@ -22,12 +27,12 @@ const Equipamento = new Schema({
     ultima_calibracao: {
         type: Date,
         required: false,
-        default: Date.now()
+        default: Date.undefined
     },
     proxima_calibracao: {
         type: Date,
         required: false,
-        default: Date.now()
+        default: Date.undefined
     },
     norma: {
         type: String,
