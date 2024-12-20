@@ -27,12 +27,12 @@ const Equipamento = new Schema({
     ultima_calibracao: {
         type: Date,
         required: false,
-        default: Date.undefined
+        default: null
     },
     proxima_calibracao: {
         type: Date,
         required: false,
-        default: Date.undefined
+        default: null
     },
     norma: {
         type: String,
