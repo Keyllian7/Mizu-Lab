@@ -5,7 +5,8 @@ const db = require('./config/db')
 const auth = require('./routes/auth')
 const equipamentos = require('./routes/equipamentos')
 const usuarios = require('./routes/usuarios')
-const cors = require('cors')
+const corsOptions = require('./config/cors')
+const cors = require('cors');
 
 // Mongoose
     mongoose.Promise = global.Promise;
@@ -16,7 +17,7 @@ const cors = require('cors')
     })
 
 const app = express();
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Rota inicial - pública
