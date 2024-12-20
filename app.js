@@ -2,14 +2,10 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const db = require('./config/db')
-const verificarToken = require('./middlewares/verificarToken')
 const auth = require('./routes/auth')
 const equipamentos = require('./routes/equipamentos')
 const usuarios = require('./routes/usuarios')
 const cors = require('cors')
-
-// Models
-const Usuario = require('./models/Usuario')
 
 // Mongoose
     mongoose.Promise = global.Promise;

@@ -3,6 +3,7 @@ require("../models/Usuario");
 const Usuario = mongoose.model('Usuario');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const hashSenha = require('../helpers/hashSenha');
 
 const registrar = async (req, res) => {
     const { nome, email, senha, confirmarSenha } = req.body;
@@ -17,9 +18,8 @@ const registrar = async (req, res) => {
     if (usuarioExistente) {
         return res.status(422).json({ mensagem: 'Esse email já está em uso!' });
     }
-
-    const salt = await bcrypt.genSalt(12);
-    const senhaHash = await bcrypt.hash(senha, salt);
+    
+    const senhaHash = await hashSenha(senha);
 
     const usuario = new Usuario({
         nome,
@@ -59,7 +59,7 @@ const login = async (req, res) => {
         const secret = process.env.SENHA_JWT;
         const token = jwt.sign({
             id: usuario._id,
-        }, secret, { expiresIn: '1h' });
+        }, secret, { expiresIn: '2h' });
         res.status(200).json({ mensagem: 'Login efetuado com sucesso!', token });
     } catch (err) {
         console.log(err);

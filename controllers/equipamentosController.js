@@ -1,20 +1,34 @@
 const mongoose = require('mongoose');
 require('../models/Equipamento');
 const Equipamento = mongoose.model('equipamentos');
+const schemaEquipamento = require('../validations/equipamentoValidation');
+const { validate } = require('../helpers/validate');
 
 const registrar = async (req, res) => {
 
     const {
-        responsavel, nome, tag,
-        norma, ensaio, metodo, teste, fabricante,
-        modelo, serie, capacidade, ponto_calibracao,
-        tolerancia, periocidade, procedimento, registro, observacoes
+        responsavel,
+        nome,
+        tag,
+        norma,
+        ensaio,
+        metodo,
+        teste,
+        fabricante,
+        modelo,
+        serie,
+        capacidade,
+        ponto_calibracao,
+        tolerancia,
+        periocidade,
+        procedimento,
+        registro,
+        observacoes
     } = req.body;
 
-    if (!responsavel || !tag || !norma || !ensaio ||
-        !metodo || !teste || !fabricante || !modelo || !serie || !capacidade ||
-        !ponto_calibracao || !tolerancia || !periocidade || !procedimento || !registro) {
-        return res.status(422).json({ mensagem: 'Preencha todos os campos!' });
+    const mensagemErro = validate(schemaEquipamento, req.body);
+    if (mensagemErro) {
+        return res.status(422).json({ mensagem: mensagemErro });
     }
 
     const equipamento = new Equipamento({
@@ -112,8 +126,8 @@ const atualizar = async (req, res) => {
     })
 }
 
-const detalhes = async(req, res) => {
-    Equipamento.findById({_id: req.params.id}).then((equipamento) => {
+const detalhes = async (req, res) => {
+    Equipamento.findById({ _id: req.params.id }).then((equipamento) => {
         res.status(200).json({ equipamento });
     }).catch((err) => {
         res.status(500).json({
@@ -122,15 +136,15 @@ const detalhes = async(req, res) => {
     })
 }
 
-const calibrar = async(req, res) => {
-    Equipamento.findById({_id: req.params.id}).then((equipamento) => {
-        if(req.params.id === undefined){
+const calibrar = async (req, res) => {
+    Equipamento.findById({ _id: req.params.id }).then((equipamento) => {
+        if (req.params.id === undefined) {
             res.status(404).json({ mensagem: 'Equipamento não encontrado!' });
         }
         equipamento.ultima_calibracao = Date.now();
         equipamento.periocidade = req.body.periocidade;
         var tempo = undefined;
-        switch (req.body.periocidade){
+        switch (req.body.periocidade) {
             case 'Anual':
                 tempo = 31536000000;
                 break;

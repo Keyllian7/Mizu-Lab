@@ -13,12 +13,12 @@ router.get('/listar', verificarToken, equipamentoController.listar)
 router.get('/deletar/:id', verificarToken, equipamentoController.deletar)
 
 // Atualizar equipamento por id
-router.put('/atualizar/:id', equipamentoController.atualizar)
+router.put('/atualizar/:id', verificarToken, equipamentoController.atualizar)
 
 // Detalhar equipamento por id
-router.get('/detalhes/:id', equipamentoController.detalhes)
+router.get('/detalhes/:id', verificarToken, equipamentoController.detalhes)
 
 // Gerenciar calibração
-router.put('/calibrar/:id', equipamentoController.calibrar)
+router.put('/calibrar/:id', verificarToken, equipamentoController.calibrar)
 
 module.exports = router;
