@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 require('../models/Equipamento');
 const Equipamento = mongoose.model('equipamentos');
-const schemaEquipamento = require('../validations/equipamentoValidation');
+const {criarEquipamento, calibrbarEquipamento, atualizarEquipamnto} = require('../validations/equipamentoValidation');
 const { validate } = require('../helpers/validate');
 
 const registrar = async (req, res) => {
@@ -26,7 +26,7 @@ const registrar = async (req, res) => {
         observacoes
     } = req.body;
 
-    const mensagemErro = validate(schemaEquipamento, req.body);
+    const mensagemErro = validate(criarEquipamento, req.body);
     if (mensagemErro) {
         return res.status(422).json({ mensagem: mensagemErro });
     }
@@ -91,10 +91,29 @@ const deletar = async (req, res) => {
 
 const atualizar = async (req, res) => {
 
-    if (!req.body.responsavel || !req.body.tag || !req.body.norma || !req.body.ensaio ||
-        !req.body.metodo || !req.body.teste || !req.body.fabricante || !req.body.modelo || !req.body.serie || !req.body.capacidade ||
-        !req.body.ponto_calibracao || !req.body.tolerancia || !req.body.periocidade || !req.body.procedimento || !req.body.registro || !req.body.observacoes) {
-        return res.status(422).json({ mensagem: 'Preencha todos os campos!' });
+    const {
+        responsavel,
+        nome,
+        tag,
+        norma,
+        ensaio,
+        metodo,
+        teste,
+        fabricante,
+        modelo,
+        serie,
+        capacidade,
+        ponto_calibracao,
+        tolerancia,
+        periocidade,
+        procedimento,
+        registro,
+        observacoes
+    } = req.body;
+
+    const mensagemErro = validate(atualizarEquipamnto, req.body);
+    if (mensagemErro) {
+        return res.status(422).json({ mensagem: mensagemErro });
     }
 
     Equipamento.findOne({ _id: req.params.id }).then((equipamento) => {
@@ -137,6 +156,12 @@ const detalhes = async (req, res) => {
 }
 
 const calibrar = async (req, res) => {
+    const { periocidade, observacoes } = req.body;
+    const mensagemErro = validate(calibrbarEquipamento, req.body);
+    if (mensagemErro) {
+        return res.status(422).json({ mensagem: mensagemErro });
+    }   
+
     Equipamento.findById({ _id: req.params.id }).then((equipamento) => {
         if (req.params.id === undefined) {
             res.status(404).json({ mensagem: 'Equipamento não encontrado!' });

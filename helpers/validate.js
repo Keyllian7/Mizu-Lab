@@ -1,7 +1,7 @@
 const validate = (schema, data) => {
-    const { error } = schema.validate(data);
+    const { error } = schema.validate(data, { abortEarly: false });
     if (error) {
-        return error.details[0].message;
+        return error.details.map(detail => detail.message).join(', ');
     }
     return null;
 };
