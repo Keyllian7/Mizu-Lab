@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 require('../models/Equipamento');
 const Equipamento = mongoose.model('equipamentos');
-const {criarEquipamento, calibrbarEquipamento, atualizarEquipamnto} = require('../validations/equipamentoValidation');
+const {schemaEquipamento, calibrbarEquipamento} = require('../validations/equipamentoValidation');
 const { validate } = require('../helpers/validate');
 
 const registrar = async (req, res) => {
@@ -20,13 +20,11 @@ const registrar = async (req, res) => {
         capacidade,
         ponto_calibracao,
         tolerancia,
-        periocidade,
         procedimento,
         registro,
-        observacoes
     } = req.body;
 
-    const mensagemErro = validate(criarEquipamento, req.body);
+    const mensagemErro = validate(schemaEquipamento, req.body);
     if (mensagemErro) {
         return res.status(422).json({ mensagem: mensagemErro });
     }
@@ -45,10 +43,8 @@ const registrar = async (req, res) => {
         capacidade,
         ponto_calibracao,
         tolerancia,
-        periocidade,
         procedimento,
         registro,
-        observacoes
     });
 
     try {
@@ -105,13 +101,11 @@ const atualizar = async (req, res) => {
         capacidade,
         ponto_calibracao,
         tolerancia,
-        periocidade,
         procedimento,
         registro,
-        observacoes
     } = req.body;
 
-    const mensagemErro = validate(atualizarEquipamnto, req.body);
+    const mensagemErro = validate(schemaEquipamento, req.body);
     if (mensagemErro) {
         return res.status(422).json({ mensagem: mensagemErro });
     }
@@ -130,10 +124,8 @@ const atualizar = async (req, res) => {
         equipamento.capacidade = req.body.capacidade;
         equipamento.ponto_calibracao = req.body.ponto_calibracao;
         equipamento.tolerancia = req.body.tolerancia;
-        equipamento.periocidade = req.body.periocidade;
         equipamento.procedimento = req.body.procedimento;
         equipamento.registro = req.body.registro;
-        equipamento.observacoes = req.body.observacoes;
 
         equipamento.save().then(() => {
             res.status(200).json({ mensagem: 'Equipamento atualizado com sucesso!' });

@@ -81,7 +81,8 @@ const Equipamento = new Schema({
     periocidade: {
         type: String,
         enum: Object.values(PeriocidadeEnum),
-        required: true,
+        required: false,
+        default: null
     },
     procedimento: {
         type: String,
