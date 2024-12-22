@@ -4,14 +4,15 @@ const Usuario = mongoose.model('Usuario');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const hashSenha = require('../helpers/hashSenha');
+const { registerValidation, loginValidation } = require('../validations/usuarioValidations');
+const { validate } = require('../helpers/validate');
 
 const registrar = async (req, res) => {
     const { nome, email, senha, confirmarSenha } = req.body;
-    if (!nome || !email || !senha) {
-        return res.status(422).json({ mensagem: 'Preencha todos os campos!' });
-    }
-    if (senha !== confirmarSenha) {
-        return res.status(422).json({ mensagem: 'As senhas não conferem!' });
+    
+    const mensagemErro = validate(registerValidation, req.body);
+    if (mensagemErro) {
+        return res.status(422).json({ mensagem: mensagemErro });
     }
 
     const usuarioExistente = await Usuario.findOne({ email: email });
@@ -41,8 +42,9 @@ const registrar = async (req, res) => {
 const login = async (req, res) => {
     const { email, senha } = req.body;
 
-    if (!email || !senha) {
-        return res.status(422).json({ mensagem: 'Preencha todos os campos!' });
+    const mensagemErro = validate(loginValidation, req.body);
+    if (mensagemErro) {
+        return res.status(422).json({ mensagem: mensagemErro });
     }
 
     const usuario = await Usuario.findOne({ email: email });
