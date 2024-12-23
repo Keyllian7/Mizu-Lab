@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const usuarioController = require('../controllers/usuariosController');
 const verificarToken = require('../middlewares/verificarToken')
+require('../swagger/usuarios.swagger');
 
 // Listar usuários
 router.get('/listar', verificarToken, usuarioController.listar)

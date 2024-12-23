@@ -7,6 +7,7 @@ const equipamentos = require('./routes/equipamentos')
 const usuarios = require('./routes/usuarios')
 const corsOptions = require('./config/cors')
 const cors = require('cors');
+const swaggerSetup = require('./swagger');
 
 // Mongoose
     mongoose.Promise = global.Promise;
@@ -28,6 +29,9 @@ app.get('/', (req, res) => {
 app.use('/auth', auth)
 app.use('/equipamentos', equipamentos)
 app.use('/usuarios', usuarios)
+
+// Swagger
+swaggerSetup(app);
 
 const porta = 8081
 app.listen(porta, () => {
