@@ -33,7 +33,7 @@ app.use('/usuarios', usuarios)
 // Swagger
 swaggerSetup(app);
 
-const porta = 8081
+const porta = process.env.PORT || 8081
 app.listen(porta, () => {
     console.log('Servidor online com sucesso!');
 })
