@@ -14,7 +14,7 @@ const swaggerOptions = {
             servers: ['http://localhost:8081'],
         },
     },
-    apis: ['./routes/*.js', './models/*.js', './swagger/*.js'],
+    apis: ['./routes/*.js', './models/*.js', './swagger/auth/*.js', './swagger/equipamentos/*.js', './swagger/usuarios/*.js'],
 };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);

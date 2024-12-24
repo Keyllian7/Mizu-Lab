@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 const equipamentoController = require('../controllers/equipamentosController');
 const verificarToken = require('../middlewares/verificarToken')
-require('../swagger/equipamentos.swagger');
-
+const caminho = require('../helpers/arquivos');
+caminho('../swagger/equipamentos/');
 // Cadastrar equipamento
 router.post('/registrar', verificarToken, equipamentoController.registrar)
 
