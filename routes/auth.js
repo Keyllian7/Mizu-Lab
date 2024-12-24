@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const authController = require('../controllers/authController');
-require("../swagger/auth.swagger")
+const caminho = require('../helpers/arquivos');
+caminho('../swagger/auth/');
 
 // Rota de registro
 router.post('/registrar', authController.registrar)
