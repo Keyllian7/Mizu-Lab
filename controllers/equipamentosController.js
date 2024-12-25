@@ -3,8 +3,10 @@ require('../models/Equipamento');
 const Equipamento = mongoose.model('equipamentos');
 const {schemaEquipamento, calibrbarEquipamento} = require('../validations/equipamentoValidation');
 const { validate } = require('../helpers/validate');
+const EquipamentoDTO = require('../dtos/EquipamentoDTO');
 
 const registrar = async (req, res) => {
+    const equipamentoDTO = new EquipamentoDTO(req.body);
 
     const {
         responsavel,
@@ -22,7 +24,7 @@ const registrar = async (req, res) => {
         tolerancia,
         procedimento,
         registro,
-    } = req.body;
+    } = equipamentoDTO;
 
     const mensagemErro = validate(schemaEquipamento, req.body);
     if (mensagemErro) {

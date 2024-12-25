@@ -6,9 +6,11 @@ const jwt = require('jsonwebtoken');
 const hashSenha = require('../helpers/hashSenha');
 const { registerValidation, loginValidation } = require('../validations/usuarioValidations');
 const { validate } = require('../helpers/validate');
+const UsuarioDTO = require('../dtos/UsuarioDTO');
 
 const registrar = async (req, res) => {
-    const { nome, email, senha, confirmarSenha } = req.body;
+    const usuarioDTO = new UsuarioDTO(req.body);
+    const { nome, email, senha, confirmarSenha } = usuarioDTO;
     
     const mensagemErro = validate(registerValidation, req.body);
     if (mensagemErro) {
@@ -40,7 +42,8 @@ const registrar = async (req, res) => {
 };
 
 const login = async (req, res) => {
-    const { email, senha } = req.body;
+    const usuarioDTO = new UsuarioDTO(req.body);
+    const { email, senha } = usuarioDTO;
 
     const mensagemErro = validate(loginValidation, req.body);
     if (mensagemErro) {
